@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import com.github.javafaker.Faker;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,11 +10,17 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.ConfigReader;
 import utilities.Driver;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 
 public class A101_Test {
@@ -21,7 +28,7 @@ public class A101_Test {
     Driver driver;
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
         Driver.getDriver().get(ConfigReader.getProperty("a101"));
         WebElement cookiebuton = Driver.getDriver().findElement(By.id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"));
         cookiebuton.click();
@@ -38,8 +45,6 @@ public class A101_Test {
         jse.executeScript("arguments[0].click();", dizalticoraptitle);
 
         WebElement dizaltısiyah = Driver.getDriver().findElement(By.xpath("(//a[@title='Penti Kadın 50 Denye Pantolon Çorabı Siyah'])[1]"));
-        //(//h3[@class='name'])[10]
-
 
         System.out.println(dizaltısiyah.getText());
         System.out.println(dizaltısiyah.getText().contains("Siyah"));
@@ -81,16 +86,13 @@ public class A101_Test {
                 .sendKeys(Keys.TAB)
                 .sendKeys("Yılar")
                 .sendKeys(Keys.TAB)
-                .sendKeys("2345434343").perform();
+                .sendKeys("5055434343").perform();
 
 
         WebElement city = Driver.getDriver().findElement(By.xpath("//select[@name='city']"));
         Select select = new Select(city);
         select.selectByIndex(30);
 
-
-
-        //select[@name='township']
         WebElement ilcedropbox = Driver.getDriver().findElement(By.xpath("//select[@name='township']"));
         Select select1 = new Select(ilcedropbox);
         select1.selectByIndex(4);
@@ -99,29 +101,31 @@ public class A101_Test {
         Select select2 = new Select(mahalledropbox);
         WebElement element=Driver.getDriver().findElement(By.xpath("//*[@id=\"js-orders-modal-container\"]/div/div[2]/form/div[6]/label/div/select/option[4]"));
         Actions actions = new Actions(Driver.getDriver());
-        actions.click(mahalledropbox).click(element).perform();
+        actions.click(mahalledropbox).perform();
+        Thread.sleep(3000);
+        select2.selectByIndex(15);
 
+        WebElement textarea = Driver.getDriver().findElement(By.xpath("//textarea[@class='js-address-textarea']"));
+        textarea.click();
+        textarea.sendKeys("huzur apartmanı d: 19");
 
-       ;
-        //jse.executeScript("arguments[0].click();",  element);
-        //System.out.println(element.getText());
+        WebElement kaydetbutton = Driver.getDriver().findElement(By.xpath("//button[@class='button green js-set-country js-prevent-emoji']"));
+        kaydetbutton.click();
+        Thread.sleep(3000);
 
+        WebElement kargoclick = Driver.getDriver().findElement(By.xpath("(//div[@class='radio'])[4]"));
+        kargoclick.click();
 
+        WebElement kaydetvedevametbutton = Driver.getDriver().findElement(By.xpath("//button[@class='button block green js-proceed-button']"));
+        kaydetvedevametbutton.click();
 
+        Thread.sleep(3000);
 
+        WebElement siparisitamamlabutton = Driver.getDriver().findElement(By.xpath("//span[@class='order-complete"));
+        WebElement kartlaodeme = Driver.getDriver().findElement(By.xpath("//div[@class='payment-tab payment-tab-masterpass js-payment-tab active']"));
+        System.out.println(kartlaodeme.getText());
 
-
-
-        //*[@id="js-orders-modal-container"]/div/div[2]/form/div[6]/label/div/select/option[4]
-
-
-
-
-
-
-        //select[@class='js-district']
-
-
+       Assert.assertTrue(siparisitamamlabutton.isDisplayed());
         }
 
 
