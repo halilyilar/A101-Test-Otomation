@@ -124,7 +124,7 @@ public class A101_Test {
         WebElement siparisitamamlabutton = Driver.getDriver().findElement(By.xpath("//span[@class='order-complete"));
         WebElement kartlaodeme = Driver.getDriver().findElement(By.xpath("//div[@class='payment-tab payment-tab-masterpass js-payment-tab active']"));
         System.out.println(kartlaodeme.getText());
-
+        Assert.assertTrue(kartlaodeme.isDisplayed());
        Assert.assertTrue(siparisitamamlabutton.isDisplayed());
         }
 
